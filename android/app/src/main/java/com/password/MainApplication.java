@@ -1,4 +1,4 @@
-package com.feed;
+package com.password;
 
 import android.app.Application;
 

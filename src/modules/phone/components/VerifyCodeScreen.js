@@ -7,7 +7,7 @@ import { phoneScreen } from '../../../styles/phone/styles';
 
 import * as actions from './../actions/index';
 
-class PhoneScreen extends Component {
+class VerifyCodeScreen extends Component {
 
   static route = {
     navigationBar: {
@@ -50,20 +50,13 @@ class PhoneScreen extends Component {
             <Text style={phoneScreen.headerText}>Verifique seu celular</Text>
           </View>
           <View style={phoneScreen.middleSection}>
-            <Text style={phoneScreen.infoText}>Digite o número do seu celular com o código de área para fazer login ou criar uma nova conta</Text>
-            <PhoneNumberInput
-              onChangeText={phoneNumber => this.setState({ phoneNumber })}
-              value={this.state.phoneNumber}
-              autoFocus
-              keyboardType="numeric"
-              countryCode="+55"
-              placeholder="(00) 00000-0000"
-              maxLength={15}
+            <Text style={phoneScreen.infoText}>Nós enviamos um código por SMS para verificar o seu número de telefone</Text>
+            <CodeNumberInput 
             />
           </View>
           <TouchableOpacity>
             <View style={[phoneScreen.bottomButton, { bottom: this.state.bottomScreen }]}>
-              <Text style={phoneScreen.bottomButtonText}>ENVIAR CÓDIGO DE VERIFICAÇÃO</Text>
+              <Text style={phoneScreen.bottomButtonText}>VALIDAR CÓDIGO</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -79,4 +72,4 @@ export default connect(
   dispatch => ({
     phoneActions: bindActionCreators(actions, dispatch),
   })
-)(PhoneScreen);
+)(VerifyCodeScreen);

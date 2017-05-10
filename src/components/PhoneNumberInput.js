@@ -1,42 +1,37 @@
 import React, { PropTypes } from 'react';
-import { TextInput, StyleSheet, View } from 'react-native';
+import { TextInput, StyleSheet, View, Text } from 'react-native';
 import { colors } from '../styles/styles';
 
-const PhoneNumberInput = ({ label, value, onChangeText, placeholder, autoCorrect, keyboardType, autoFocus, countryCode }) => {
-  const { inputStyle, labelStyle, containerStyle } = styles;
+const PhoneNumberInput = ({ value, onChangeText, placeholder, autoCorrect, keyboardType, autoFocus, maxLength, countryCode }) => {
+  const { containerStyle } = styles;
   return (
     <View style={containerStyle}>
-      <TextInput
-        placeholder={countryCode}
-        style={{flex: 0.1}}
-        value={countryCode}
-        editable={false}
-      />
-      <TextInput
-        placeholder={placeholder}
-        autoCorrect={autoCorrect}
-        style={{flex: 0.8}}
-        value={value}
-        keyboardType={keyboardType}
-        autoFocus={autoFocus}
-        onChangeText={onChangeText}
-      />
+      <View style={{ flex: 0.2 }}>
+        <Text style={{ color: colors.primaryColor, fontSize: 16, paddingRight: '15%', textAlign: 'right', textAlignVertical: 'center'}}>{countryCode}</Text>
+      </View>
+      <View style={{ flex: 0.6 }}>
+        <TextInput
+          style={{ height: 40, color: colors.blackPrimary, fontSize: 16 }}
+          placeholder={placeholder}
+          autoCorrect={autoCorrect}
+          value={value}
+          keyboardType={keyboardType}
+          autoFocus={autoFocus}
+          onChangeText={onChangeText}
+          maxLength={maxLength}
+        />
+      </View>
+      <View style={{ flex: 0.2 }}></View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  inputStyle: {
-    color: colors.blackPrimary,
-    fontSize: 16,
-    height: 40,
-    
-  },
   containerStyle: {
-    flex: 1,
+    height: 50,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'center'
   }
 });
 

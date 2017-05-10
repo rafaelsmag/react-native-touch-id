@@ -6,30 +6,31 @@ import { NavigationProvider, StackNavigation } from '@expo/ex-navigation';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions/index';
+import { colors } from '../../../styles/styles';
 
 
 class Navigator extends Component {
 
-    render() {
-        return (
-            <NavigationProvider router={Router}>
-                <StatusBar
-                    backgroundColor='#DD3142'
-                    barStyle="dark-content"
-                />
-                <StackNavigation
-                    id="master"
-                    defaultRouteConfig={{
-                        navigationBar: {
-                            backgroundColor: '#DD3142',
-                            tintColor: '#ffffff',
-                        }
-                    }}
-                    initialRoute={Router.getRoute('phone')}
-                />
-            </NavigationProvider>
-        );
-    }
+  render() {
+    return (
+      <NavigationProvider router={Router}>
+        <StatusBar
+          backgroundColor={colors.primaryColor}
+          barStyle="light-content"
+        />
+        <StackNavigation
+          id="master"
+          defaultRouteConfig={{
+            navigationBar: {
+              backgroundColor: colors.primaryColor,
+              tintColor: '#ffffff',
+            }
+          }}
+          initialRoute={Router.getRoute('phone')}
+        />
+      </NavigationProvider>
+    );
+  }
 }
 
 export default connect(

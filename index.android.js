@@ -1,8 +1,5 @@
-import React, { Component } from 'react';
+import { AppRegistry } from 'react-native';
 import Root from './src/Root';
 
-import {
-  AppRegistry
-} from 'react-native';
 
-AppRegistry.registerComponent('Password', () => Root);
+AppRegistry.registerComponent('password', () => Root);
