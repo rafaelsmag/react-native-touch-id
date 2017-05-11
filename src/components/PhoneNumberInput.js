@@ -7,7 +7,7 @@ const PhoneNumberInput = ({ value, onChangeText, placeholder, autoCorrect, keybo
   return (
     <View style={containerStyle}>
       <View style={{ flex: 0.2 }}>
-        <Text style={{ color: colors.primaryColor, fontSize: 16, paddingRight: '15%', textAlign: 'right', textAlignVertical: 'center'}}>{countryCode}</Text>
+        <Text style={{ color: colors.primaryColor, fontSize: 16, paddingRight: '15%', textAlign: 'right', textAlignVertical: 'center' }}>{countryCode}</Text>
       </View>
       <View style={{ flex: 0.6 }}>
         <TextInput
@@ -21,7 +21,7 @@ const PhoneNumberInput = ({ value, onChangeText, placeholder, autoCorrect, keybo
           maxLength={maxLength}
         />
       </View>
-      <View style={{ flex: 0.2 }}></View>
+      <View style={{ flex: 0.2 }} />
     </View>
   );
 };

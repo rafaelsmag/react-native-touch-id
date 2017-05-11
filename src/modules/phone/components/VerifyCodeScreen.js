@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, TouchableOpacity, View, Keyboard} from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import PhoneNumberInput from '../../../components/PhoneNumberInput';
-import { phoneScreen } from '../../../styles/phone/styles';
+import CodeNumberInput from '../../../components/CodeNumberInput';
+import { codeScreen } from '../../../styles/phone/styles';
+import { colors } from '../../../styles/styles';
 
 import * as actions from './../actions/index';
 
@@ -11,52 +13,69 @@ class VerifyCodeScreen extends Component {
 
   static route = {
     navigationBar: {
-      visible: false
+      visible: true,
+      title: 'Verificar Telefone'
     }
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      phoneNumber: '',
-      bottomScreen: 0
+      code: '',
     };
-    this.onSubmitPhoneNumber = this.onSubmitPhoneNumber.bind(this);
+    this.codeFilled = this.codeFilled.bind(this);
+    this.onInputFocus = this.onInputFocus.bind(this);
   }
 
-  onSubmitPhoneNumber(phoneNumber) {
-    console.log(phoneNumber);
+  renderIcon() {
+    const { codeSuccess, isLoading, codeErrorMessage } = this.props.phoneState;
+    if (codeSuccess) {
+      return <Ionicons name="ios-checkmark-circle" size={80} color="green" />;
+    }
+    if (isLoading) {
+      return <ActivityIndicator size="large" color={colors.primaryColor} />;
+    }
+    if (codeErrorMessage) {
+      return <Ionicons name="ios-alert-outline" size={80} color={colors.primaryColor} />;
+    }
+    return <Ionicons name="ios-checkmark-circle-outline" size={80} color={colors.primaryColor} />;
+
   }
 
-  componentWillMount() {
-    Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
-    Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
+  codeFilled(code) {
+    console.log(this.props);
+    const { phoneActions } = this.props;
+    this.setState({ code });
+    phoneActions.submitCodeVerify(code);
   }
 
-  keyboardWillShow(e) {
-    this.setState({ bottomScreen: e.endCoordinates.height });
-  }
+  onInputFocus(id) {
+    const { phoneActions } = this.props;
+    const { codeErrorMessage, codeSuccess} = this.props.phoneState;
 
-  keyboardWillHide() {
-    this.setState({ bottomScreen: 0 });
+    console.log(codeErrorMessage, codeSuccess);
+    if (codeErrorMessage || codeSuccess) {
+      phoneActions.dismissErrorMessage();
+    }
   }
-
 
   render() {
     return (
-      <ScrollView contentContainerStyle={phoneScreen.scrollContainer}>
-        <View style={phoneScreen.containerStyle}>
-          <View style={phoneScreen.firstSection}>
-            <Text style={phoneScreen.headerText}>Verifique seu celular</Text>
+      <ScrollView contentContainerStyle={codeScreen.scrollContainer}>
+        <View style={codeScreen.containerStyle}>
+          <View style={codeScreen.firstSection}>
+            {this.renderIcon()}
           </View>
-          <View style={phoneScreen.middleSection}>
-            <Text style={phoneScreen.infoText}>Nós enviamos um código por SMS para verificar o seu número de telefone</Text>
-            <CodeNumberInput 
+          <View style={codeScreen.middleSection}>
+            <Text style={codeScreen.infoText}>Nós enviamos um código por SMS para verificar o seu número de telefone</Text>
+            <CodeNumberInput
+              filled={this.codeFilled}
+              onFocus={this.onInputFocus}
             />
           </View>
           <TouchableOpacity>
-            <View style={[phoneScreen.bottomButton, { bottom: this.state.bottomScreen }]}>
-              <Text style={phoneScreen.bottomButtonText}>VALIDAR CÓDIGO</Text>
+            <View style={codeScreen.bottomButton}>
+              <Text style={codeScreen.bottomButtonText}>VALIDAR CÓDIGO</Text>
             </View>
           </TouchableOpacity>
         </View>
